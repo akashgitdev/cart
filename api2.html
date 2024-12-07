@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+
+        .header {
+            background-color: #282c3f;
+            color: #fff;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        #container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        #container div {
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 15px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        #container div:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        .product-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin: 5px 0;
+            color: #282c3f;
+        }
+
+        .product-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #535766;
+            margin: 5px 0;
+        }
+
+        .product-id {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 15px;
+        }
+
+        .empty-cart {
+            text-align: center;
+            font-size: 18px;
+            color: #888;
+            margin-top: 50px;
+        }
+
+        .header-button {
+            background-color: #ff3f6c;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 10px auto;
+            display: block;
+            width: fit-content;
+            transition: background-color 0.3s ease;
+        }
+
+        .header-button:hover {
+            background-color: #e6325e;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">My Cart</div>
+    <button class="header-button" onclick="goToProducts()">Back to Products</button>
+    <div id="container"></div>
+    <script>
+        let parent = document.getElementById("container");
+        let getdata = JSON.parse(localStorage.getItem("details")) || [];
+
+        if (getdata.length === 0) {
+            parent.innerHTML = `<div class="empty-cart">Your cart is empty. Start adding items!</div>`;
+        } else {
+            getdata.map((val) => {
+                let child = document.createElement("div");
+
+                let img1 = document.createElement("img");
+                img1.src = val.image;
+
+                let childa = document.createElement("div");
+                childa.className = "product-title";
+                childa.innerText = val.title;
+
+                let childb = document.createElement("div");
+                childb.className = "product-price";
+                childb.innerText = `$${val.price}`;
+
+                let childc = document.createElement("div");
+                childc.className = "product-id";
+                childc.innerText = `Product ID: ${val.id}`;
+
+                child.append(img1, childa, childb, childc);
+                parent.append(child);
+            });
+        }
+
+        function goToProducts() {
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>
